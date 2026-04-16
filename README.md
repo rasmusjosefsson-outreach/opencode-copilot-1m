@@ -22,9 +22,9 @@ Add to your `opencode.json`:
 
 Restart OpenCode. You'll see new model entries like "Claude Opus 4.7 (1M)" alongside the originals.
 
-## Optional: set reasoning effort
+## Recommended: set reasoning effort
 
-The plugin can't control reasoning effort (that's a per-user config setting). If you want to change it on a 1M variant, add it to your model config. For example, Opus 4.7 defaults to something other than medium:
+The plugin can't control reasoning effort (that's a per-user config setting). Recommended settings for the 1M variants:
 
 ```json
 {
@@ -32,11 +32,11 @@ The plugin can't control reasoning effort (that's a per-user config setting). If
   "provider": {
     "github-copilot": {
       "models": {
+        "claude-opus-4.6-1m": {
+          "reasoningEffort": "high"
+        },
         "claude-opus-4.7-1m": {
-          "reasoningEffort": "medium",
-          "variants": {
-            "medium": { "reasoningEffort": "medium" }
-          }
+          "reasoningEffort": "medium"
         }
       }
     }
@@ -44,9 +44,11 @@ The plugin can't control reasoning effort (that's a per-user config setting). If
 }
 ```
 
+> `high` is the max for Opus 4.6. `medium` is currently the highest available for Opus 4.7.
+
 ## How it works
 
-The plugin hooks into the `github-copilot` provider's model list and clones each supported model into a `-1m` variant with `limit.context` set to 1M. For Opus 4.6, it uses the real Copilot model ID `claude-opus-4.6-1m`. For others, it keeps the original API model ID but overrides the client-side context limit.
+The plugin hooks into the `github-copilot` provider's model list and clones each supported model into a `-1m` variant with `limit.context` set to 1M. It keeps the original API model ID but overrides the client-side context limit.
 
 It also sets the `Copilot-Integration-Id: copilot-developer-cli` header on all Copilot requests.
 
