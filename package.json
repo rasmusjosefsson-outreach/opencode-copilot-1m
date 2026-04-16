@@ -1,11 +1,22 @@
 {
   "name": "opencode-copilot-1m",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "OpenCode plugin to enable 1M context window for Claude models via GitHub Copilot",
-  "main": "index.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "keywords": ["opencode", "plugin", "copilot", "claude", "1m", "context"],
   "license": "MIT",
-  "dependencies": {
-    "@opencode-ai/plugin": "*"
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "tsc"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.4.6",
+    "typescript": "^5.9.0"
   }
 }

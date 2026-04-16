@@ -1,46 +1,28 @@
-import type { Hooks } from "@opencode-ai/plugin";
+import type { Plugin } from "@opencode-ai/plugin";
 
-export default function (): Hooks {
+const MODELS = [
+  "claude-opus-4.6",
+  "claude-opus-4.7",
+  "claude-sonnet-4.6",
+];
+
+export const plugin: Plugin = async () => {
   return {
     provider: {
       id: "github-copilot",
       async models(provider) {
-        // Opus 4.6
-        const opus46 = provider.models["claude-opus-4.6"];
-        if (opus46) {
-          provider.models["claude-opus-4.6"] = {
-            ...opus46,
-            name: opus46.name || "Claude Opus 4.6",
-            limit: {
-              ...opus46.limit,
-              context: 1000000,
-              input: 900000,
-            },
-          };
-        }
+        for (const id of MODELS) {
+          const base = provider.models[id];
+          if (!base) continue;
 
-        // Opus 4.7
-        const opus47 = provider.models["claude-opus-4.7"];
-        if (opus47) {
-          provider.models["claude-opus-4.7"] = {
-            ...opus47,
-            name: opus47.name || "Claude Opus 4.7",
+          const name = base.name || id;
+          provider.models[`${id}-1m`] = {
+            ...base,
+            id: `${id}-1m`,
+            name: `${name} (1M)`,
+            api: { ...base.api, id: id === "claude-opus-4.6" ? `${id}-1m` : id },
             limit: {
-              ...opus47.limit,
-              context: 1000000,
-              input: 900000,
-            },
-          };
-        }
-
-        // Sonnet 4.6
-        const sonnet46 = provider.models["claude-sonnet-4.6"];
-        if (sonnet46) {
-          provider.models["claude-sonnet-4.6"] = {
-            ...sonnet46,
-            name: sonnet46.name || "Claude Sonnet 4.6",
-            limit: {
-              ...sonnet46.limit,
+              ...base.limit,
               context: 1000000,
               input: 900000,
             },
@@ -55,4 +37,6 @@ export default function (): Hooks {
       output.headers["Copilot-Integration-Id"] = "copilot-developer-cli";
     },
   };
-}
+};
+
+export default plugin;
