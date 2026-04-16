@@ -20,7 +20,7 @@ export const plugin: Plugin = async () => {
             ...base,
             id: `${id}-1m`,
             name: `${name} (1M)`,
-            api: { ...base.api, id: id === "claude-opus-4.6" ? `${id}-1m` : id },
+            api: { ...base.api },
             limit: {
               ...base.limit,
               context: 1000000,
