@@ -1,30 +1,51 @@
 import type { Plugin } from "@opencode-ai/plugin";
 
-const MODELS = [
-  "claude-opus-4.6",
-  "claude-opus-4.7",
-  "claude-sonnet-4.6",
-];
+const MODEL_VARIANTS = [
+  {
+    baseID: "claude-opus-4.6",
+    variantID: "claude-opus-4.6-1m",
+    preserveExisting: false,
+    limit: { context: 1000000, input: 900000 },
+  },
+  {
+    baseID: "claude-opus-4.7",
+    variantID: "claude-opus-4.7-1m",
+    preserveExisting: false,
+    limit: { context: 1000000, input: 900000 },
+  },
+  {
+    baseID: "claude-sonnet-4.6",
+    variantID: "claude-sonnet-4.6-1m",
+    preserveExisting: false,
+    limit: { context: 1000000, input: 900000 },
+  },
+  {
+    baseID: "gpt-5.4",
+    variantID: "gpt-5.4-1m",
+    preserveExisting: true,
+    limit: { context: 1050000, input: 922000 },
+  },
+] as const;
 
 export const plugin: Plugin = async () => {
   return {
     provider: {
       id: "github-copilot",
       async models(provider) {
-        for (const id of MODELS) {
-          const base = provider.models[id];
+        for (const variant of MODEL_VARIANTS) {
+          const base = provider.models[variant.baseID];
           if (!base) continue;
+          if (variant.preserveExisting && provider.models[variant.variantID]) continue;
 
-          const name = base.name || id;
-          provider.models[`${id}-1m`] = {
+          const name = base.name || variant.baseID;
+          provider.models[variant.variantID] = {
             ...base,
-            id: `${id}-1m`,
+            id: variant.variantID,
             name: `${name} (1M)`,
-            api: { ...base.api },
+            api: base.api ? { ...base.api } : base.api,
             limit: {
-              ...base.limit,
-              context: 1000000,
-              input: 900000,
+              ...(base.limit ?? {}),
+              ...variant.limit,
             },
           };
         }
