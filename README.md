@@ -1,6 +1,6 @@
 # opencode-copilot-1m
 
-OpenCode plugin that adds long-context variants for Claude and GPT-5.4 models on GitHub Copilot.
+OpenCode plugin that adds long-context variants for Claude and GPT-5 models on GitHub Copilot.
 
 Without this plugin, Copilot can expose smaller client-side limits than you want for long sessions. This plugin creates separate `(1M)` model entries with higher client-side limits while keeping the original models available.
 
@@ -10,6 +10,7 @@ Without this plugin, Copilot can expose smaller client-side limits than you want
 - Claude Opus 4.7
 - Claude Sonnet 4.6
 - GPT-5.4
+- GPT-5.5
 
 ## Install
 
@@ -21,7 +22,7 @@ Add to your `opencode.json`:
 }
 ```
 
-Restart OpenCode. You'll see new model entries like "Claude Opus 4.7 (1M)" and "GPT-5.4 (1M)" alongside the originals.
+Restart OpenCode. You'll see new model entries like "Claude Opus 4.7 (1M)", "GPT-5.4 (1M)" and "GPT-5.5 (1M)" alongside the originals.
 
 ## Recommended: set reasoning effort
 

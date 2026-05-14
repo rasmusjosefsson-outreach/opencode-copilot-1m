@@ -25,6 +25,12 @@ const MODEL_VARIANTS = [
     preserveExisting: true,
     limit: { context: 1050000, input: 922000 },
   },
+  {
+    baseID: "gpt-5.5",
+    variantID: "gpt-5.5-1m",
+    preserveExisting: true,
+    limit: { context: 1050000, input: 922000 },
+  },
 ] as const;
 
 export const plugin: Plugin = async () => {
