@@ -1,6 +1,6 @@
 {
   "name": "opencode-copilot-1m",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "OpenCode plugin to add long-context Claude and GPT-5 variants via GitHub Copilot",
   "type": "module",
   "main": "./dist/index.js",
@@ -8,6 +8,14 @@
   "files": ["dist"],
   "keywords": ["opencode", "plugin", "copilot", "claude", "gpt", "1m", "context"],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasmusjosefsson-outreach/opencode-copilot-1m.git"
+  },
+  "homepage": "https://github.com/rasmusjosefsson-outreach/opencode-copilot-1m#readme",
+  "bugs": {
+    "url": "https://github.com/rasmusjosefsson-outreach/opencode-copilot-1m/issues"
+  },
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "tsc"
